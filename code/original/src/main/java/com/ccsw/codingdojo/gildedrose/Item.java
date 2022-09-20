@@ -1,12 +1,17 @@
-package com.capgemini.ccsw.codingdojo.gildedrose;
+package com.ccsw.codingdojo.gildedrose;
 
+/**
+ * NO TOCAR ESTA CLASE, EL GOBLIN NO PERMITE SU MODIFICACIÓN
+ * @author ccsw
+ *
+ */
 public class Item {
 
     public String name;
 
-    public int sellIn;
+    private int sellIn;
 
-    public int quality;
+    private int quality;
 
     public Item(String name, int sellIn, int quality) {
         this.name = name;

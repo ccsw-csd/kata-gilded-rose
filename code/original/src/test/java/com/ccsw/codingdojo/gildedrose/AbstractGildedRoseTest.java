@@ -1,4 +1,4 @@
-package com.capgemini.ccsw.codingdojo.gildedrose;
+package com.ccsw.codingdojo.gildedrose;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,8 +11,8 @@ public abstract class AbstractGildedRoseTest {
         GildedRose app = new GildedRose(new Item[] { item });
         app.updateQuality();
 
-        assertEquals(initialQuality + deltaQuality, item.quality);
-        assertEquals(initialSellIn - 1, item.sellIn);
+        assertEquals(initialQuality + deltaQuality, item.getQuality());
+        assertEquals(initialSellIn - 1, item.getSellIn());
     }
 
     protected void testItemQualityAndSellin(String itemName, int initialSellIn, int initialQuality, int deltaSellin, int deltaQuality) {
@@ -21,8 +21,8 @@ public abstract class AbstractGildedRoseTest {
         GildedRose app = new GildedRose(new Item[] { item });
         app.updateQuality();
 
-        assertEquals(initialQuality + deltaQuality, item.quality);
-        assertEquals(initialSellIn + deltaSellin, item.sellIn);
+        assertEquals(initialQuality + deltaQuality, item.getQuality());
+        assertEquals(initialSellIn + deltaSellin, item.getSellIn());
     }
 
 }

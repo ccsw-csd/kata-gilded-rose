@@ -1,4 +1,4 @@
-package com.capgemini.ccsw.codingdojo.gildedrose;
+package com.ccsw.codingdojo.gildedrose;
 
 import org.junit.Test;
 

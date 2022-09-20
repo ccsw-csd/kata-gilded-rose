@@ -1,4 +1,4 @@
-package com.capgemini.ccsw.codingdojo.gildedrose;
+package com.ccsw.codingdojo.gildedrose;
 
 @SuppressWarnings("javadoc")
 public class ConjuredItemTest extends AbstractGildedRoseTest {

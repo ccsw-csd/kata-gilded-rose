@@ -1,7 +1,7 @@
-package com.capgemini.ccsw.codingdojo.gildedrose;
+package com.ccsw.codingdojo.gildedrose;
 
 /**
- * @author pajimene
+ * @author ccsw
  *
  */
 public class GildedRose {
