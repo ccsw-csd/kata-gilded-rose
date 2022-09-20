@@ -7,7 +7,7 @@ package com.ccsw.codingdojo.gildedrose;
  */
 public class Item {
 
-    public String name;
+    private String name;
 
     private int sellIn;
 
