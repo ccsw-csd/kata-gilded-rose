@@ -5,7 +5,7 @@ package com.ccsw.codingdojo.gildedrose;
  * @author ccsw
  *
  */
-public class Item {
+public final class Item {
 
     private String name;
 
