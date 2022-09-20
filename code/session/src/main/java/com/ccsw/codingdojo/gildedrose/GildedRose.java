@@ -5,6 +5,12 @@ package com.ccsw.codingdojo.gildedrose;
  *
  */
 public class GildedRose {
+    private static final int LIMIT_QUALITY = 50;
+    private static final int THRESHOLD_TRIPLE = 6;
+    private static final int THRESHOLD_DOUBLE = 11;
+    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
+    private static final String AGED_BRIE = "Aged Brie";
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -15,53 +21,96 @@ public class GildedRose {
 
         for (int i = 0; i < this.items.length; i++) {
 
-            if (!this.items[i].getName().equals("Aged Brie") && !this.items[i].getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (this.items[i].getQuality() > 0) {
-                    if (!this.items[i].getName().equals("Sulfuras, Hand of Ragnaros")) {
-                        this.items[i].setQuality(this.items[i].getQuality() - 1);
-                    }
-                }
-            } else {
-                if (this.items[i].getQuality() < 50) {
-                    this.items[i].setQuality(this.items[i].getQuality() + 1);
+            Item item = this.items[i];
 
-                    if (this.items[i].getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (this.items[i].getSellIn() < 11) {
-                            if (this.items[i].getQuality() < 50) {
-                                this.items[i].setQuality(this.items[i].getQuality() + 1);
-                            }
-                        }
+            updateQuality(item);
 
-                        if (this.items[i].getSellIn() < 6) {
-                            if (this.items[i].getQuality() < 50) {
-                                this.items[i].setQuality(this.items[i].getQuality() + 1);
-                            }
-                        }
-                    }
-                }
-            }
+            updateSellIn(item);
 
-            if (!this.items[i].getName().equals("Sulfuras, Hand of Ragnaros")) {
-                this.items[i].setSellIn(this.items[i].getSellIn() - 1);
-            }
-
-            if (this.items[i].getSellIn() < 0) {
-                if (!this.items[i].getName().equals("Aged Brie")) {
-                    if (!this.items[i].getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (this.items[i].getQuality() > 0) {
-                            if (!this.items[i].getName().equals("Sulfuras, Hand of Ragnaros")) {
-                                this.items[i].setQuality(this.items[i].getQuality() - 1);
-                            }
-                        }
-                    } else {
-                        this.items[i].setQuality(this.items[i].getQuality() - this.items[i].getQuality());
-                    }
-                } else {
-                    if (this.items[i].getQuality() < 50) {
-                        this.items[i].setQuality(this.items[i].getQuality() + 1);
-                    }
-                }
-            }
+            applyExpiredRules(item);
         }
+    }
+
+    private void applyExpiredRules(Item item) {
+        if (isExpired(item) == false)
+            return;
+
+        switch (item.getName()) {
+
+        case AGED_BRIE:
+            increaseQuality(item);
+            break;
+
+        case BACKSTAGE_PASSES:
+            dropQuality(item);
+            break;
+
+        default:
+            decreaseQuality(item);
+
+        }
+
+    }
+
+    private void dropQuality(Item item) {
+        item.setQuality(item.getQuality() - item.getQuality());
+    }
+
+    private void updateSellIn(Item item) {
+        if (isNotName(item, SULFURAS)) {
+            item.setSellIn(item.getSellIn() - 1);
+        }
+    }
+
+    private void updateQuality(Item item) {
+        if (isName(item, AGED_BRIE) || isName(item, BACKSTAGE_PASSES)) {
+            increaseQuality(item);
+            applyBackstageRules(item);
+            return;
+        }
+        decreaseQuality(item);
+
+    }
+
+    private boolean isExpired(Item item) {
+        return item.getSellIn() < 0;
+    }
+
+    private void applyBackstageRules(Item item) {
+
+        if (isNotName(item, BACKSTAGE_PASSES))
+            return;
+
+        if (item.getSellIn() < THRESHOLD_DOUBLE) {
+            increaseQuality(item);
+        }
+
+        if (item.getSellIn() < THRESHOLD_TRIPLE) {
+            increaseQuality(item);
+        }
+    }
+
+    private void increaseQuality(Item item) {
+        if (item.getQuality() < LIMIT_QUALITY) {
+            item.setQuality(item.getQuality() + 1);
+        }
+    }
+
+    private void decreaseQuality(Item item) {
+        if (hasQuality(item) && isNotName(item, SULFURAS)) {
+            item.setQuality(item.getQuality() - 1);
+        }
+    }
+
+    private boolean hasQuality(Item item) {
+        return item.getQuality() > 0;
+    }
+
+    private boolean isName(Item item, String name) {
+        return item.getName().equals(name);
+    }
+
+    private boolean isNotName(Item item, String name) {
+        return isName(item, name) == false;
     }
 }
